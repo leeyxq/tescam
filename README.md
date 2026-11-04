@@ -106,6 +106,18 @@ Scripts/package.sh        # 输出到 dist/
 | `tescam-<版本>-macOS-cli.zip` | 命令行工具，通用二进制 |
 | `SHA256SUMS.txt` | 各安装包校验值 |
 
+### GitHub 自动发版
+
+推送 semver tag 后，GitHub Actions（`.github/workflows/release.yml`）在 `macos-15` 上调用 `Scripts/set-version.sh` + `Scripts/package.sh`，并把产物上传到 [Releases](https://github.com/leeyxq/tescam/releases)：
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+- tag 必须为 `vX.Y.Z`；CI 会把工程内 `MARKETING_VERSION` 临时改成该版本再打包（不写回仓库）。
+- 当前为 ad-hoc / 未公证；配置仓库 Secret `SIGN_IDENTITY`（及后续证书 Secrets）后可接 Developer ID 签名。
+
 有付费开发者账号时，可设置 `SIGN_IDENTITY="Developer ID Application: …"` 后打包并自行公证；iOS 正式分发需通过 Xcode Archive 上传 TestFlight / App Store。
 `Scripts/make-icon.swift` 用于重新生成 App 图标。
 
