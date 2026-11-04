@@ -4,6 +4,7 @@
 #   TesCam-<版本>-iOS-unsigned.ipa   iOS/iPadOS 未签名包，需用自己的 Apple ID 重签后安装
 #   tescam-<版本>-macOS-cli.zip      命令行工具（通用二进制）
 # 有 Developer ID 时可设置 SIGN_IDENTITY="Developer ID Application: ..." 并自行公证。
+# CI: .github/workflows/release.yml 在 tag vX.Y.Z 时调用；可设 SIGN_IDENTITY。
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,6 +13,9 @@ BUILD="$DIST/.build"
 PROJECT="$ROOT/App/Tescam.xcodeproj"
 VERSION="$(grep -m1 'MARKETING_VERSION' "$PROJECT/project.pbxproj" | sed -E 's/.*= *([^;]+);/\1/')"
 SIGN_IDENTITY="${SIGN_IDENTITY:--}"
+if [[ -z "$SIGN_IDENTITY" ]]; then
+  SIGN_IDENTITY="-"
+fi
 
 rm -rf "$DIST"
 mkdir -p "$BUILD"
