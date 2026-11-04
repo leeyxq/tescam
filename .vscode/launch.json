@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:tescam}",
+            "name": "Debug tescam",
+            "target": "tescam",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug tescam"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:tescam}",
+            "name": "Release tescam",
+            "target": "tescam",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release tescam"
+        }
+    ]
+}
